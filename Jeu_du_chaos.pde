@@ -1,4 +1,9 @@
-Point[] sommets = new Point[3];
+// Changez ces variables autant que vous voulez
+final int nbSommets = 3;
+final boolean regulier = true;
+final float rapport = 0.5;
+
+Polygone polygone;
 Point P;
 
 void setup() {
@@ -7,19 +12,23 @@ void setup() {
   stroke(255);
   frameRate(200);
 
-  sommets[0] = new Point(width/2, 0     );
-  sommets[1] = new Point(0,       height);
-  sommets[2] = new Point(width,   height);
-  P = new Point(width/2, 0);
+  polygone = new Polygone(nbSommets, regulier);
+  P = new Point( random(width), random(height) );
 }
 
 void draw() {
-  P = milieu(P, sommets[ randInt(sommets.length-1) ] );
+  // On choisit un sommet au hasard
+  int idCible = randInt(polygone.nbSommets - 1);
+  Point cible = polygone.sommets[idCible];
+  
+  // On déplace le point à une fraction donnée de la distance au sommet choisit
+  P.deplacer( P.x + rapport * (cible.x - P.x),
+              P.y + rapport * (cible.y - P.y) );
   P.dessiner();
 }
 
 
-
+// fonction qui retourne un entier au hasard
 int randInt(int min, int max) {
   return int( random(min, max+1) );
 }

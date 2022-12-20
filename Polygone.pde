@@ -1,0 +1,41 @@
+class Polygone {
+
+  int nbSommets;
+  Point[] sommets;
+  
+  Polygone(int nbSommets, boolean regulier) {
+    this.nbSommets = nbSommets;
+    sommets = new Point[nbSommets];
+
+    if (regulier) {
+      Point centre = new Point(width/2, height/2); // Centre du polygone
+      float rCercle = min(width, height) / 2; // rayon du cercle circonscrit au polygone
+    
+      for (int i=0; i < nbSommets; i++) {
+        float angle = TWO_PI / nbSommets * i - HALF_PI;
+
+        sommets[i] = new Point( centre.x + cos(angle) * rCercle, centre.y + sin(angle) * rCercle );
+      }
+    }
+    else { // polygone quelconque, sommets au hasard
+      for (int i=0; i < nbSommets; i++) {
+        sommets[i] = new Point( random(width), random(height) );
+      }
+    }
+  }
+
+  // fonction qui n'a servit qu'au développement
+  void dessiner() {
+    for (int i=0; i < nbSommets-1; i++) {
+      line( sommets[i], sommets[i+1] );
+    }
+    line( sommets[nbSommets-1], sommets[0] );
+  }
+
+}
+
+
+// fonction qui n'a servit qu'à la fonction dessiner
+void line(Point A, Point B) {
+  line( A.x, A.y, B.x, B.y);
+}
