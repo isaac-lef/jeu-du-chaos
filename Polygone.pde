@@ -1,8 +1,7 @@
 class Polygone {
-
   int nbSommets;
   Point[] sommets;
-  
+
   Polygone(int nbSommets, boolean regulier) {
     this.nbSommets = nbSommets;
     sommets = new Point[nbSommets];
@@ -24,12 +23,12 @@ class Polygone {
       }
     }
   }
-  
+
   // si on veut entrer les coordonnées manuellement
   Polygone(float... coordonnees) {
     nbSommets = coordonnees.length / 2;
     sommets = new Point[nbSommets];
-    
+
     for (int i=0; i < nbSommets; i++) {
       sommets[i] = new Point( coordonnees[i*2], coordonnees[i*2+1] );
     }
@@ -42,5 +41,4 @@ class Polygone {
     }
     line( sommets[nbSommets-1], sommets[0] );
   }
-
 }
