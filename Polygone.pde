@@ -9,18 +9,29 @@ class Polygone {
 
     if (regulier) {
       Point centre = new Point(width/2, height/2); // Centre du polygone
-      float rCercle = min(width, height) / 2; // rayon du cercle circonscrit au polygone
-    
+      float rCercle = min(width, height) / 2;      // rayon du cercle circonscrit au polygone
+
+      // On met chaque point sur le cercle, à angle égal
       for (int i=0; i < nbSommets; i++) {
         float angle = TWO_PI / nbSommets * i - HALF_PI;
-
         sommets[i] = new Point( centre.x + cos(angle) * rCercle, centre.y + sin(angle) * rCercle );
       }
     }
-    else { // polygone quelconque, sommets au hasard
+    else {
+      // polygone quelconque, sommets au hasard
       for (int i=0; i < nbSommets; i++) {
         sommets[i] = new Point( random(width), random(height) );
       }
+    }
+  }
+  
+  // si on veut entrer les coordonnées manuellement
+  Polygone(float... coordonnees) {
+    nbSommets = coordonnees.length / 2;
+    sommets = new Point[nbSommets];
+    
+    for (int i=0; i < nbSommets; i++) {
+      sommets[i] = new Point( coordonnees[i*2], coordonnees[i*2+1] );
     }
   }
 
@@ -32,10 +43,4 @@ class Polygone {
     line( sommets[nbSommets-1], sommets[0] );
   }
 
-}
-
-
-// fonction qui n'a servit qu'à la fonction dessiner
-void line(Point A, Point B) {
-  line( A.x, A.y, B.x, B.y);
 }

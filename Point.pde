@@ -15,3 +15,7 @@ class Point {
     y = nvY;
   }
 }
+
+void line(Point A, Point B) {
+  line( A.x, A.y, B.x, B.y);
+}
