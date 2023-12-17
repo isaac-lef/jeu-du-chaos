@@ -1,5 +1,6 @@
 Polygone polygone;
 Point P;
+Restriction restriction;
 int nbSommets;
 boolean regulier;
 boolean polygoneVisible;
@@ -15,8 +16,8 @@ void setup() {
         nbSommets = 4; // à partir de 3
          regulier = true;
   polygoneVisible = false;
-          rapport = 0.5; // r>0, flocon()
-      restriction = pasOppose; // aucune, pas2fois, pasSuivant, pasACotePrec, pasOppose
+          rapport = 0.4; // r>0, flocon()
+      restriction = Restriction.pasOppose; // aucune, pas2fois, pasSuivant, pasACotePrec, pasOppose
     ptsParSeconde = 6000; // à partir de 60
   //======================================================================================
 
@@ -46,7 +47,7 @@ void draw() {
 
 
 void mouseClicked() {
-  saveFrame(nbSommets + " côtés, rapport " + rapport + strRestriction() +".png");
+  saveFrame(nbSommets + " côtés, rapport " + rapport + ", restriction " + restriction +".png");
   println("Écran capturé !");
 }
 

@@ -1,41 +1,42 @@
-int restriction;
+import java.util.List;
+import java.util.LinkedList;
 
-final int aucune = 0;
-final int pas2fois = 1;
-final int pasSuivant = 2;
-final int pasACotePrec = 3;
-final int pasOppose = 4;
-
-void choisirCible() {
-// On choisit un sommet au hasard
-    int[] choix = new int[nbSommets];
-    int nbChoix = 0;
-    for (int i = 0; i < nbSommets; i++) {
-
-      if ( !(restriction == pas2fois && i == idCible) &&
-           !(restriction == pasSuivant && i == (idCible + 1) % nbSommets) &&
-           !(restriction == pasACotePrec && (i == (idCible+1) % nbSommets || i == (idCible + nbSommets - 1) % nbSommets) ) &&
-           !(restriction == pasOppose && i == (idCible + nbSommets/2) % nbSommets)
-          ) {
-        choix[nbChoix] = i;
-        nbChoix++;
-      }
-    }
-    idCible = choix[ randInt(nbChoix-1) ];
+enum Restriction {
+  aucune,
+  pas2fois,
+  pasSuivant,
+  pasACotePrec,
+  pasOppose
 }
 
-String strRestriction() {
-  if (restriction == pas2fois) {
-    return ", pas2fois";
+void choisirCible() {
+  List<Integer> choix = new LinkedList<>();
+  for (int i = 0; i < nbSommets; i++) {
+    boolean valide;
+    switch (restriction) {
+      case pas2fois :
+        valide = (i != idCible);
+        break;
+      case pasSuivant :
+        valide = (i != (idCible + 1) % nbSommets);
+        break;
+      case pasACotePrec :
+        valide = (i != (idCible+1) % nbSommets && i != (idCible + nbSommets - 1) % nbSommets);
+        break;
+      case pasOppose :
+        valide = (i != (idCible + nbSommets/2) % nbSommets);
+        break;
+      default :
+        valide = true;
+        break;
+    }
+    if (valide) choix.add(i);
   }
-  if (restriction == pasSuivant) {
-    return ", pasSuivant";
-  }
-  if (restriction == pasACotePrec) {
-    return ", pasACotePrec";
-  }
-  if (restriction == pasOppose) {
-    return ", pasOppose";
-  }
-  return "";
+  idCible = randElement(choix);
+}
+
+// fonction qui retourne un élément au hasard d'une liste donnée
+int randElement(List<Integer> list) {
+  int size = list.size();
+  return list.get(randInt(size-1));
 }
